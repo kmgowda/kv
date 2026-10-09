@@ -5,7 +5,7 @@
 //   ./gradlew test -Pseeds=1000    the same, with 1,000 randomized chaos seeds
 
 plugins {
-    java
+    id 'java'
 }
 
 java {
@@ -14,25 +14,25 @@ java {
     }
 }
 
-tasks.withType<JavaCompile>().configureEach {
-    options.encoding = "UTF-8"
-    options.compilerArgs.addAll(listOf("-Xlint:all", "-Werror"))
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.compilerArgs.addAll(['-Xlint:all', '-Werror'])
 }
 
-val simulationTest = tasks.register<JavaExec>("simulationTest") {
-    group = "verification"
-    description = "Runs the simulation test suite (kv.TestMain); set the number of chaos seeds with -Pseeds=N."
-    classpath = sourceSets["test"].runtimeClasspath
-    mainClass = "kv.TestMain"
-    args(providers.gradleProperty("seeds").orElse("50").get())
+def simulationTest = tasks.register('simulationTest', JavaExec) {
+    group = 'verification'
+    description = 'Runs the simulation test suite (kv.TestMain); set the number of chaos seeds with -Pseeds=N.'
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'kv.TestMain'
+    args(providers.gradleProperty('seeds').orElse('50').get())
 }
 
 // The suite is a plain main program rather than JUnit tests, so `test` runs it instead of Gradle's test runner.
-tasks.test {
+tasks.named('test') {
     enabled = false
-    dependsOn(simulationTest)
+    dependsOn simulationTest
 }
 
-tasks.check {
-    dependsOn(simulationTest)
+tasks.named('check') {
+    dependsOn simulationTest
 }

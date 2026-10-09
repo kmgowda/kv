@@ -18,8 +18,8 @@ On Windows, use `gradlew.bat` instead of `./gradlew`.
 
 ```text
 kv/
-├── build.gradle.kts            build: Java 21, warnings as errors, `test` runs the simulation suite
-├── settings.gradle.kts
+├── build.gradle                build: Java 21, warnings as errors, `test` runs the simulation suite
+├── settings.gradle
 ├── gradlew, gradlew.bat        Gradle wrapper (downloads the pinned Gradle version on first use)
 ├── gradle/wrapper/
 ├── src/main/java/kv/
