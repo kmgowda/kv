@@ -1,0 +1,38 @@
+// kv: a Raft-replicated key-value store (companion code for "Distributed Systems Simplified", Chapter 56).
+// No runtime or test dependencies: the test suite is a deterministic simulation driven by kv.TestMain.
+//
+//   ./gradlew test                 compile (warnings are errors) and run the 12 tests with 50 chaos seeds
+//   ./gradlew test -Pseeds=1000    the same, with 1,000 randomized chaos seeds
+
+plugins {
+    java
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+tasks.withType<JavaCompile>().configureEach {
+    options.encoding = "UTF-8"
+    options.compilerArgs.addAll(listOf("-Xlint:all", "-Werror"))
+}
+
+val simulationTest = tasks.register<JavaExec>("simulationTest") {
+    group = "verification"
+    description = "Runs the simulation test suite (kv.TestMain); set the number of chaos seeds with -Pseeds=N."
+    classpath = sourceSets["test"].runtimeClasspath
+    mainClass = "kv.TestMain"
+    args(providers.gradleProperty("seeds").orElse("50").get())
+}
+
+// The suite is a plain main program rather than JUnit tests, so `test` runs it instead of Gradle's test runner.
+tasks.test {
+    enabled = false
+    dependsOn(simulationTest)
+}
+
+tasks.check {
+    dependsOn(simulationTest)
+}

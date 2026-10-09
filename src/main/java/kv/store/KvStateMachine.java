@@ -1,4 +1,4 @@
-package kmgkv.kv;
+package kv.store;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -18,7 +18,7 @@ import java.util.TreeMap;
  *
  * <h2>Retry deduplication and its assumptions</h2>
  * The session table stores, per client, the highest sequence number executed and its result.
- * This is correct ONLY under the client discipline enforced by {@link kmgkv.sim.SimClient}:
+ * This is correct ONLY under the client discipline enforced by {@link kv.sim.SimClient}:
  * <ol>
  *   <li>each client has at most one outstanding write at a time;</li>
  *   <li>it retries with the same sequence number until it receives a final answer;</li>

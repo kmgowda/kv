@@ -1,4 +1,4 @@
-package kmgkv.raft;
+package kv.raft;
 
 /**
  * One log slot: the command plus the term of the leader that created it.

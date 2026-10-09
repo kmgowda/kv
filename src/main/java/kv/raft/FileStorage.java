@@ -1,4 +1,4 @@
-package kmgkv.raft;
+package kv.raft;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;

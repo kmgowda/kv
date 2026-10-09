@@ -1,4 +1,4 @@
-package kmgkv.raft;
+package kv.raft;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,12 +9,12 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
-import kmgkv.raft.Message.AppendEntries;
-import kmgkv.raft.Message.AppendEntriesReply;
-import kmgkv.raft.Message.InstallSnapshot;
-import kmgkv.raft.Message.InstallSnapshotReply;
-import kmgkv.raft.Message.RequestVote;
-import kmgkv.raft.Message.RequestVoteReply;
+import kv.raft.Message.AppendEntries;
+import kv.raft.Message.AppendEntriesReply;
+import kv.raft.Message.InstallSnapshot;
+import kv.raft.Message.InstallSnapshotReply;
+import kv.raft.Message.RequestVote;
+import kv.raft.Message.RequestVoteReply;
 
 /**
  * A deterministic, single-threaded Raft core in the style of etcd's raft library.

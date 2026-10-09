@@ -4,24 +4,44 @@ A distributed key–value store: the companion code for the book series
 **Distributed Systems Simplified: From First Principles to Production Internals** (Chapter 56, Volume 3).
 
 A replicated key–value store built on a from-scratch Raft implementation, with a deterministic
-fault-injecting simulator and a linearizability checker. Plain Java 21, no dependencies.
+fault-injecting simulator and a linearizability checker. Plain Java 21, no runtime or test dependencies.
+It builds with Gradle; the Gradle wrapper is included, so you only need JDK 21 or newer.
 
 ```bash
-./build.sh          # compile and run the test suite (50 randomized chaos seeds)
-./build.sh 1000     # run more seeds
+./gradlew test                 # compile (warnings are errors) and run the 12 tests with 50 chaos seeds
+./gradlew test -Pseeds=1000    # the same, with 1,000 randomized chaos seeds
+```
+
+On Windows, use `gradlew.bat` instead of `./gradlew`.
+
+## Project layout
+
+```text
+kv/
+├── build.gradle.kts            build: Java 21, warnings as errors, `test` runs the simulation suite
+├── settings.gradle.kts
+├── gradlew, gradlew.bat        Gradle wrapper (downloads the pinned Gradle version on first use)
+├── gradle/wrapper/
+├── src/main/java/kv/
+│   ├── raft/                   the Raft core and its storage
+│   ├── store/                  the key–value state machine and server
+│   ├── sim/                    the deterministic fault-injecting simulator
+│   └── check/                  the linearizability checker
+├── src/test/java/kv/           the test suite
+└── READING-GUIDE.md            file-level reading guide to the open-source systems in the book
 ```
 
 ## What is implemented and tested
 
-| Area | Files |
+| Area | Files (under `src/main/java/kv/` unless shown) |
 |------|-------|
-| Raft: elections, log replication, commit rule, persistence, snapshots, InstallSnapshot, ReadIndex | `src/kmgkv/raft/RaftNode.java` |
-| Durable storage: in-memory (for simulation) and file-based with CRCs, torn-tail recovery, atomic snapshot generations | `src/kmgkv/raft/MemoryStorage.java`, `FileStorage.java` |
-| KV state machine with client sessions (retry deduplication) and snapshots | `src/kmgkv/kv/KvStateMachine.java` |
-| Server glue: writes through the log, reads through ReadIndex, automatic compaction | `src/kmgkv/kv/KvServer.java` |
-| Deterministic simulator: delay, loss, duplication, reordering, partitions, crash/restart, invariant checks | `src/kmgkv/sim/Cluster.java`, `SimClient.java` |
-| Linearizability checker (Wing–Gong with memoization, per key) | `src/kmgkv/check/Linearizability.java` |
-| Test suite (12 tests, including regression tests for classic Raft bugs) | `src/kmgkv/test/TestMain.java` |
+| Raft: elections, log replication, commit rule, persistence, snapshots, InstallSnapshot, ReadIndex | `raft/RaftNode.java` |
+| Durable storage: in-memory (for simulation) and file-based with CRCs, torn-tail recovery, atomic snapshot generations | `raft/MemoryStorage.java`, `raft/FileStorage.java` |
+| KV state machine with client sessions (retry deduplication) and snapshots | `store/KvStateMachine.java` |
+| Server glue: writes through the log, reads through ReadIndex, automatic compaction | `store/KvServer.java` |
+| Deterministic simulator: delay, loss, duplication, reordering, partitions, crash/restart, invariant checks | `sim/Cluster.java`, `sim/SimClient.java` |
+| Linearizability checker (Wing–Gong with memoization, per key) | `check/Linearizability.java` |
+| Test suite (12 tests, including regression tests for classic Raft bugs) | `src/test/java/kv/TestMain.java` |
 
 ## What is deliberately NOT implemented
 
@@ -41,7 +61,7 @@ This is teaching code. Use etcd's raft, hashicorp/raft, or Apache Ratis for prod
 
 ## Using this repository with the book
 
-- Chapter 56 explains the design, and its code listings are excerpts from the files in `src/kmgkv/`.
+- Chapter 56 explains the design, and its code listings are excerpts from the files in `src/main/java/kv/`.
   Appendix A.1 in Volume 3 describes this repository.
 - [`READING-GUIDE.md`](READING-GUIDE.md) is the detailed, file-by-file guide to the source code of the
   open-source systems discussed in each chapter. It lives here rather than in the printed book because

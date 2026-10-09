@@ -1,4 +1,4 @@
-package kmgkv.check;
+package kv.check;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -12,8 +12,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import kmgkv.kv.Command;
-import kmgkv.kv.Result;
+import kv.store.Command;
+import kv.store.Result;
 
 /**
  * A linearizability checker for single-key register-like histories (the Wing-Gong algorithm with

@@ -1,16 +1,16 @@
-package kmgkv.kv;
+package kv.store;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import kmgkv.raft.Entry;
-import kmgkv.raft.Message;
-import kmgkv.raft.RaftNode;
-import kmgkv.raft.Storage;
+import kv.raft.Entry;
+import kv.raft.Message;
+import kv.raft.RaftNode;
+import kv.raft.Storage;
 
 /**
- * One kmgkv server: a RaftNode plus the KV state machine, glued together.
+ * One kv server: a RaftNode plus the KV state machine, glued together.
  *
  * <ul>
  *   <li>Writes are proposed to Raft and answered when THEIR entry is applied. The reply is sent

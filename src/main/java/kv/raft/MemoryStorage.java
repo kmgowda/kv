@@ -1,4 +1,4 @@
-package kmgkv.raft;
+package kv.raft;
 
 import java.util.ArrayList;
 import java.util.List;

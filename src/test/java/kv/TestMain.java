@@ -1,4 +1,4 @@
-package kmgkv.test;
+package kv;
 
 import java.io.IOException;
 import java.nio.channels.FileChannel;
@@ -13,21 +13,21 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
-import kmgkv.check.Linearizability;
-import kmgkv.kv.Command;
-import kmgkv.kv.KvStateMachine;
-import kmgkv.kv.Result;
-import kmgkv.raft.Entry;
-import kmgkv.raft.FileStorage;
-import kmgkv.raft.MemoryStorage;
-import kmgkv.raft.Message;
-import kmgkv.raft.RaftNode;
-import kmgkv.raft.Storage;
-import kmgkv.sim.Cluster;
-import kmgkv.sim.SimClient;
+import kv.check.Linearizability;
+import kv.store.Command;
+import kv.store.KvStateMachine;
+import kv.store.Result;
+import kv.raft.Entry;
+import kv.raft.FileStorage;
+import kv.raft.MemoryStorage;
+import kv.raft.Message;
+import kv.raft.RaftNode;
+import kv.raft.Storage;
+import kv.sim.Cluster;
+import kv.sim.SimClient;
 
 /**
- * The kmgkv test suite. Run with: {@code java -cp out kmgkv.test.TestMain [chaosSeeds]}.
+ * The kv test suite. Run with: {@code ./gradlew test} (add {@code -Pseeds=1000} for more chaos seeds).
  * Plain Java (no test framework) so it runs anywhere a JDK 21 is installed.
  */
 public final class TestMain {
@@ -290,7 +290,7 @@ public final class TestMain {
     // ---------------------------------------------------------------------------------------------
 
     static void fileStorageRecovery() throws IOException {
-        Path dir = Files.createTempDirectory("kmgkv");
+        Path dir = Files.createTempDirectory("kv-test");
         FileStorage s = new FileStorage(dir);
         s.saveHardState(3, 1);
         List<Entry> es = new ArrayList<>();

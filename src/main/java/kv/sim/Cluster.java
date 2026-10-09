@@ -1,4 +1,4 @@
-package kmgkv.sim;
+package kv.sim;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,13 +10,13 @@ import java.util.PriorityQueue;
 import java.util.Random;
 import java.util.Set;
 
-import kmgkv.kv.Command;
-import kmgkv.kv.KvServer;
-import kmgkv.kv.Result;
-import kmgkv.raft.Entry;
-import kmgkv.raft.MemoryStorage;
-import kmgkv.raft.Message;
-import kmgkv.raft.RaftNode;
+import kv.store.Command;
+import kv.store.KvServer;
+import kv.store.Result;
+import kv.raft.Entry;
+import kv.raft.MemoryStorage;
+import kv.raft.Message;
+import kv.raft.RaftNode;
 
 /**
  * A deterministic, single-threaded cluster simulator.

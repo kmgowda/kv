@@ -1,4 +1,4 @@
-package kmgkv.kv;
+package kv.store;
 
 /** The outcome of an operation, as returned to the client. */
 public record Result(Status status, String value) {

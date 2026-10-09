@@ -1,12 +1,12 @@
-package kmgkv.sim;
+package kv.sim;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import kmgkv.check.Linearizability.Op;
-import kmgkv.kv.Command;
-import kmgkv.kv.Result;
+import kv.check.Linearizability.Op;
+import kv.store.Command;
+import kv.store.Result;
 
 /**
  * A simulated client that follows the retry discipline the state machine relies on:
